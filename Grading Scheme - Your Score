@@ -1,0 +1,28 @@
+Total Marks: 10
+
+Build Success: 1
+Clean Code: 1
+	Proper Naming Convention: 0.5
+	Proper Indentation: 0.5
+Classes are Designed as per requirements: 2
+CalculatePrice - Business Critical Function: 1
+assignDriver - Service Critical Function: 1
+Input Validations for Location: 1 
+User-interface is managed properly: 1
+Any of Update function is done correctly: 1
+Followed all submission guidelines: 1
+--------------------------------------------------
+Your Score: 3/10
+
+Build Success: 1
+Clean Code: 0.5 (No Proper Naming Convention followed)
+Classes are Designed as per requirements: 0.5 (Not Designed as per the Requirements)
+CalculatePrice - Business Critical Function: 0
+assignDriver - Service Critical Function: 0
+Input Validations for Location: 0
+User-interface is managed properly: 0 (No UI. Can't say anything)
+Any of Update function is done correctly: 0 
+Followed all submission guidelines: 1
+--------------------------------------------------
+hmm... Please email me. why you don't write any code? Are you afraid of writing code? Or you don't understand the program flow ?
+Please work on it.  
