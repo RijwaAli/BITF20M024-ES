@@ -1,19 +1,122 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 
-namespace Assignment_3
+namespace Assignment4
 {
-    /// <summary>
-    /// task 2
-    /// </summary>
-    class Program
+    internal class Program
     {
-        static void Main()
+        public static string add(string equation)
         {
-            Dictionary<int, string> studentDB = new Dictionary<int, string>();
+            try
+            {
+
+                string equationWithAddition = equation.Replace("+", "+");
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("expression", typeof(string), equationWithAddition);
+                DataRow row = dataTable.NewRow();
+                dataTable.Rows.Add(row);
+
+
+                double result = double.Parse((string)row["expression"]);
+                return result.ToString();
+            }
+            catch (Exception)
+            {
+                return " Invalid equation";
+            }
+        }
+
+
+        public static string subtract(string equation)
+        {
+            try
+            {
+                string equationWithSubtraction = equation.Replace("-", "-");
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("expression", typeof(string), equationWithSubtraction);
+                DataRow row = dataTable.NewRow();
+                dataTable.Rows.Add(row);
+                double result = double.Parse((string)row["expression"]);
+                return result.ToString();
+            }
+            catch (Exception)
+            {
+                return " Invalid equation";
+            }
+        }
+        public static string multiply(string equation)
+        {
+            try
+            {
+                string equationWithSubtraction = equation.Replace("-", "-");
+                string equationWithAddition = equationWithSubtraction.Replace("+", "+");
+                string equationWithMultiplication = equationWithAddition.Replace("x", "*").Replace("*", "*");
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("expression", typeof(string), equationWithMultiplication);
+                DataRow row = dataTable.NewRow();
+                dataTable.Rows.Add(row);
+                double result = double.Parse((string)row["expression"]);
+                return result.ToString();
+            }
+            catch (Exception)
+            {
+                return " Invalid equation";
+            }
+        }
+        public static string divide(string equation)
+        {
+            try
+            {
+                string equationWithSubtraction = equation.Replace("-", "-");
+                string equationWithAddition = equationWithSubtraction.Replace("+", "+");
+                string equationWithMultiplication = equationWithAddition.Replace("x", "*").Replace("*", "*").Replace("·", "*");
+                string equationWithDivision = equationWithMultiplication.Replace("/", "/");
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("expression", typeof(string), equationWithDivision);
+                DataRow row = dataTable.NewRow();
+                dataTable.Rows.Add(row);
+
+                double result = double.Parse((string)row["expression"]);
+                string resultString = result.ToString("G17");
+
+                return resultString;
+            }
+            catch (Exception)
+            {
+                return "Invalid equation";
+            }
+        }
+        public static string DMAS(string equation)
+        {
+            try
+            {
+                string equationWithSubtraction = equation.Replace("-", "-");
+                string equationWithAddition = equationWithSubtraction.Replace("+", "+");
+                string equationWithMultiplication = equationWithAddition.Replace("x", "*").Replace("*", "*").Replace("·", "*");
+                string equationWithDivision = equationWithMultiplication.Replace("/", "/");
+
+
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("expression", typeof(string), equationWithDivision);
+                DataRow row = dataTable.NewRow();
+                dataTable.Rows.Add(row);
+
+                double result = double.Parse((string)row["expression"]);
+                string resultString = result.ToString("G17");
+
+                return resultString;
+            }
+            catch (Exception)
+            {
+                return "Invalid equation";
+            }
+        }
+
+        static void Main(string[] args)
+        {
             Console.WriteLine("\n");
             Console.WriteLine("\t\t\t\t\t----------------------------------------------\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t\tSTUDENT DATABASE \t\t\t\t\t\t");
+            Console.WriteLine("\t\t\t\t\t\t\tCalculator \t\t\t\t\t\t");
             Console.WriteLine("\t\t\t\t\t----------------------------------------------\t\t\t\t\t");
             Console.WriteLine("\n");
 
@@ -21,152 +124,73 @@ namespace Assignment_3
             {
                 try
                 {
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Student Database Menu:");
-                    Console.WriteLine("1. Add Student");
-                    Console.WriteLine("2. View Students");
-                    Console.WriteLine("3. Search Student by ID");
-                    Console.WriteLine("4. Update Student Name");
-                    Console.WriteLine("5. Exit");
+                    Console.WriteLine("\nCalculator Menu:");
+                    Console.WriteLine("1. Add");
+                    Console.WriteLine("2. Subtract");
+                    Console.WriteLine("3. Multiply");
+                    Console.WriteLine("4. Divide");
+                    Console.WriteLine("5. DMAS");
+                    Console.WriteLine("6. Exit");
                     Console.Write("Enter your choice: ");
+                    int choice = Convert.ToInt32(Console.ReadLine());
 
-                    if (int.TryParse(Console.ReadLine(), out int choice))
+                    switch (choice)
                     {
-                        switch (choice)
-                        {
-                            case 1:
-                                AddStudent(studentDB);
-                                break;
-                            case 2:
-                                ViewStudents(studentDB);
-                                break;
-                            case 3:
-                                SearchStudent(studentDB);
-                                break;
-                            case 4:
-                                UpdateStudent(studentDB);
-                                break;
-                            case 5:
-                                Console.WriteLine("Exit");
-                                return;
-                            default:
-                                Console.WriteLine("Invalid choice. Please enter a valid option.");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid choice.");
+                        case 1:
+                            Console.WriteLine("Enter an equation: ");
+                            string equation = Console.ReadLine();
+
+                            string result = add(equation);
+
+                            Console.WriteLine($"Result: {result}");
+                            break;
+                        case 2:
+                            Console.WriteLine("Enter an equation: ");
+                            string equ = Console.ReadLine();
+
+                            string res = subtract(equ);
+
+                            Console.WriteLine($"Result: {res}");
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter an equation: ");
+                            string eq = Console.ReadLine();
+
+                            string final = add(eq);
+
+                            Console.WriteLine($"Result: {final}");
+                            break; ;
+                        case 4:
+                            Console.WriteLine("Enter an equation: ");
+                            string equat = Console.ReadLine();
+
+                            string output = add(equat);
+
+                            Console.WriteLine($"Result: {output}");
+                            break;
+                        case 5:
+                            Console.WriteLine("Enter an equation: ");
+                            string eq1 = Console.ReadLine();
+                            equation = eq1.Replace("/", " / ").Replace("x", " x ");
+                            string[] equationParts = equation.Split(' ');
+                            Array.Reverse(equationParts);
+                            equation = string.Join(" ", equationParts);
+
+                            string res1 = DMAS(equation);
+
+                            Console.WriteLine($"Result: {res1}");
+                        case 6:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter a valid option.");
+                            break;
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
-            }
-        }
-
-        static void AddStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    Console.Write("Enter Student Name: ");
-                    string studentName = Console.ReadLine();
-
-                    if (!database.ContainsKey(studentID))
-                    {
-                        database.Add(studentID, studentName);
-                        Console.WriteLine("Student added successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Student with the same ID already exists.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        static void ViewStudents(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.WriteLine("Student Database:");
-                foreach (var kvp in database)
-                {
-                    Console.WriteLine($"Student ID: {kvp.Key}, Name: {kvp.Value}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        static void SearchStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID to search: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    if (database.ContainsKey(studentID))
-                    {
-                        Console.WriteLine($"Student ID: {studentID}, Name: {database[studentID]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information regarding this id found in the database.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        static void UpdateStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID to update: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    if (database.ContainsKey(studentID))
-                    {
-                        Console.Write("Enter new name: ");
-                        string newName = Console.ReadLine();
-                        database[studentID] = newName;
-                        Console.WriteLine("Updated successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information regarding this id found in the database.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
     }
