@@ -1,173 +1,121 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Assignment6;
+using static assignment_6.abstract_factory;
+using static assignment_6.abstract_factory1;
 
-namespace Assignment_3
+namespace assignment_6
 {
-    /// <summary>
-    /// task 2
-    /// </summary>
-    class Program
+
+    internal class Program
     {
-        static void Main()
+        public static void Main(string[] args)
         {
-            Dictionary<int, string> studentDB = new Dictionary<int, string>();
-            Console.WriteLine("\n");
-            Console.WriteLine("\t\t\t\t\t----------------------------------------------\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t\tSTUDENT DATABASE \t\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t----------------------------------------------\t\t\t\t\t");
-            Console.WriteLine("\n");
+            Console.WriteLine("\n\nExample 1");
+            Singleton instance1 = Singleton.GetInstance();
+            Singleton instance2 = Singleton.GetInstance();
+            Console.WriteLine(instance1 == instance2);
 
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Student Database Menu:");
-                    Console.WriteLine("1. Add Student");
-                    Console.WriteLine("2. View Students");
-                    Console.WriteLine("3. Search Student by ID");
-                    Console.WriteLine("4. Update Student Name");
-                    Console.WriteLine("5. Exit");
-                    Console.Write("Enter your choice: ");
+            Console.WriteLine("\n\nExample 2");
+            Singleton2 instance3 = Singleton2.GetInstance();
+            Singleton2 instance4 = Singleton2.GetInstance();
 
-                    if (int.TryParse(Console.ReadLine(), out int choice))
-                    {
-                        switch (choice)
-                        {
-                            case 1:
-                                AddStudent(studentDB);
-                                break;
-                            case 2:
-                                ViewStudents(studentDB);
-                                break;
-                            case 3:
-                                SearchStudent(studentDB);
-                                break;
-                            case 4:
-                                UpdateStudent(studentDB);
-                                break;
-                            case 5:
-                                Console.WriteLine("Exit");
-                                return;
-                            default:
-                                Console.WriteLine("Invalid choice. Please enter a valid option.");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid choice.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
-            }
-        }
+            Console.WriteLine(instance3 == instance4);
 
-        static void AddStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    Console.Write("Enter Student Name: ");
-                    string studentName = Console.ReadLine();
+            //////// task 2  ////////////////////
 
-                    if (!database.ContainsKey(studentID))
-                    {
-                        database.Add(studentID, studentName);
-                        Console.WriteLine("Student added successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Student with the same ID already exists.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
+            // Example 1
+            Console.WriteLine("\n\nExample 1");
+            Factory factory2 = new Factory();
+            IProduct productA = factory2.CreateProduct("A");
+            IProduct productB = factory2.CreateProduct("B");
 
-        static void ViewStudents(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.WriteLine("Student Database:");
-                foreach (var kvp in database)
-                {
-                    Console.WriteLine($"Student ID: {kvp.Key}, Name: {kvp.Value}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
+            productA.Create();
+            productB.Create();
 
-        static void SearchStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID to search: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    if (database.ContainsKey(studentID))
-                    {
-                        Console.WriteLine($"Student ID: {studentID}, Name: {database[studentID]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information regarding this id found in the database.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
+            // Example 2
+            Console.WriteLine("\n\nExample 2");
+            Creator creatorA = new CreatorA();
+            IProduct1 productA1 = creatorA.FactoryMethod();
+            productA1.Create();
 
-        static void UpdateStudent(Dictionary<int, string> database)
-        {
-            try
-            {
-                Console.Write("Enter Student ID to update: ");
-                if (int.TryParse(Console.ReadLine(), out int studentID))
-                {
-                    if (database.ContainsKey(studentID))
-                    {
-                        Console.Write("Enter new name: ");
-                        string newName = Console.ReadLine();
-                        database[studentID] = newName;
-                        Console.WriteLine("Updated successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information regarding this id found in the database.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid Student ID.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
+            Creator creatorB = new CreatorB();
+            IProduct1 productB1 = creatorB.FactoryMethod();
+            productB1.Create();
+
+            ////task 3////
+            Console.WriteLine("\n\nExample 1");
+            IGUIFactory windowsFactory = new WindowsFactory();
+            IGUIFactory macOSFactory = new MacOSFactory();
+
+            // Create products using the factories
+            IButton windowsButton = windowsFactory.CreateButton();
+            ICheckbox windowsCheckbox = windowsFactory.CreateCheckbox();
+
+            IButton macOSButton = macOSFactory.CreateButton();
+            ICheckbox macOSCheckbox = macOSFactory.CreateCheckbox();
+
+            // Display products
+            windowsButton.Display();
+            windowsCheckbox.Display();
+
+            macOSButton.Display();
+            macOSCheckbox.Display();
+
+
+            Console.WriteLine("\n\nExample 2");
+            IGUIFactory1 windowsFactory1 = new WindowsFactory1();
+            IGUIFactory1 macOSFactory1 = new MacOSFactory1();
+
+            // Create products using the factories
+            IButton1 windowsButton1 = windowsFactory1.CreateButton();
+            ICheckbox1 windowsCheckbox1 = windowsFactory1.CreateCheckbox();
+
+            IButton1 macOSButton1 = macOSFactory1.CreateButton();
+            ICheckbox1 macOSCheckbox1 = macOSFactory1.CreateCheckbox();
+
+            // display products
+            windowsButton1.Display();
+            windowsCheckbox1.Display();
+
+            macOSButton1.Display();
+            macOSCheckbox1.Display();
+
+
+            //task 4
+
+            Console.WriteLine("\n\nExample 1");
+            IBuilder builder = new Builder();
+            Director director = new Director();
+
+            director.Construct(builder);
+
+            Product product = builder.GetResult();
+            product.Show();
+
+            Console.WriteLine("\n\nExample 2");
+
+            IHtmlBuilder1 builder1 = new BasicHtmlBuilder();
+            
+
+            director.Construct(builder);
+
+            HtmlDocument document = builder1.GetResult();
+            document.Show();
+
+
+            ConcretePrototype prototype = new ConcretePrototype(1);
+            ConcretePrototype clonedObject = (ConcretePrototype)prototype.Clone();
+
+            Console.WriteLine($"Original Object: {prototype.Id}");
+            Console.WriteLine($"Cloned Object: {clonedObject.Id}");
+
+            ComplexObject originalObject = new ComplexObject(1, new List<string> { "A", "B", "C" });
+            ComplexObject clonedObject = originalObject.DeepClone();
+
+            Console.WriteLine($"Original Object: {originalObject.Id}, Data: {string.Join(", ", originalObject.Data)}");
+            Console.WriteLine($"Cloned Object: {clonedObject.Id}, Data: {string.Join(", ", clonedObject.Data)}");
+
+
+
         }
     }
 }
