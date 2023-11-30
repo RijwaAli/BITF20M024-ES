@@ -1,4 +1,4 @@
-﻿namespace Assignment_7
+﻿namespace Assignment_8
 {
     public class Program
     {
@@ -6,44 +6,31 @@
         {
             Console.WriteLine("--------------Task 1------------");
             Console.WriteLine("Example 1");
-            Adaptee adaptee = new Adaptee();
-            Adapter adapter = new Adapter(adaptee);
-            Console.WriteLine(adapter.Request());
-            Console.WriteLine("\n");
+            templateMethod template = new ConcreteClass1();
+            template.TemplateMethod();
 
             Console.WriteLine("Example 2");
-            ITarget targetAdapter = new Adapter2();
-            Console.WriteLine(targetAdapter.Request());
+            templateMethod template1 = new ConcreteClass2();
+            template.TemplateMethod();
             Console.WriteLine("\n");
 
-            Console.WriteLine("--------------Task 2------------");
-            Console.WriteLine("Example 1");
-            Leaf leaf = new Leaf();
-            Composite composite = new Composite();
-            composite.Add(new Leaf());
-            composite.Add(new Leaf());
-            Console.WriteLine(composite.Operation());
-            Console.WriteLine("\n");
-
-            Console.WriteLine("Example 2");
-            Circle circle = new Circle();
-            Square square = new Square();
-            Picture picture = new Picture();
-            picture.Add(circle);
-            picture.Add(square);
-            Console.WriteLine(picture.Draw());
-            Console.WriteLine("\n");
+          
 
             Console.WriteLine("--------------Task 3------------");
-            Console.WriteLine("Example 1");
-            IImage image = new VirtualProxyImage("nature.jpg");
-            Console.WriteLine(image.GetDisplay());
+            Console.WriteLine("Example ");
+            Handler handlerA = new ConcreteHandlerA();
+            Handler handlerB = new ConcreteHandlerB();
+            Handler handlerC = new ConcreteHandlerC();
 
-            Console.WriteLine("\n");
-            Console.WriteLine("Example 2");
-            IAccount account = new SecureAccountProxy("secret");
-            account.Withdraw(200);
-            account.Withdraw(800);
+            handlerA.SetSuccessor(handlerB);
+            handlerB.SetSuccessor(handlerC);
+
+            int[] requests = { 5, 12, 25 };
+
+            foreach (var request in requests)
+            {
+                handlerA.HandleRequest(request);
+            }
             Console.WriteLine("\n");
 
             Console.WriteLine("--------------Task 4------------");
@@ -66,41 +53,107 @@
 
             Console.WriteLine("--------------Task 5------------");
             Console.WriteLine("Example 1");
-            Facade facade = new Facade();
-            Console.WriteLine(facade.Operation());
-            Console.WriteLine("\n");
+            Istrategy strategyA = new ConcreteStrategyA();
+            Context contextA = new Context(strategyA);
+            contextA.ExecuteStrategy();
 
             Console.WriteLine("Example 2");
-            ComputerFacade computerFacade = new ComputerFacade();
-            Console.WriteLine(computerFacade.Start());
+            
+            Istrategy strategyB = new ConcreteStrategyB();
+            Context contextB = new Context(strategyB);
+            contextB.ExecuteStrategy();
             Console.WriteLine("\n");
 
             Console.WriteLine("--------------Task 6------------");
             Console.WriteLine("Example 1");
-            IImplementation implementationA = new ConcreteImplementationA();
-            Abstraction abstraction = new RefinedAbstraction(implementationA);
-            Console.WriteLine(abstraction.Operation());
+            Receiver receiver = new Receiver();
+            ConcreteCommand cmd = new ConcreteCommand(receiver);
+            Invoker invoker = new Invoker();
+            invoker.SetCommand(cmd);
+            invoker.ExecuteCommand();
             Console.WriteLine("\n");
 
             Console.WriteLine("Example 2");
-            ITheme darkTheme = new DarkTheme();
-            WebPage homePage = new HomePage(darkTheme);
-            Console.WriteLine(homePage.GetContent());
+            Receiver receiver1 = new Receiver();
+            ConcreteCommand cmd1 = new ConcreteCommand(receiver1);
+            Invoker invoker1 = new Invoker();
+            invoker.SetCommand(cmd1);
+            invoker.ExecuteCommand();
 
             Console.WriteLine("\n");
             Console.WriteLine("--------------Task 7------------");
             Console.WriteLine("Example 1");
-            IText plainText = new PlainText("Hello, world!");
-            Console.WriteLine($"Formatted Text: {plainText.Format()}");
-            IText boldText = new BoldTextDecorator(plainText);
-            Console.WriteLine($"Formatted Text: {boldText.Format()}");
+            Context context = new Context(new ConcreteStateA());
+
+            context.Request();
+            context.Request();
+            context.Request();
             Console.WriteLine("\n");
 
             Console.WriteLine("Example 2");
-            IText plainText1 = new PlainText("Hello, world!");
-            Console.WriteLine($"Formatted Text: {plainText1.Format()}");
-            IText boldText1 = new BoldTextDecorator(plainText1);
-            Console.WriteLine($"Formatted Text: {boldText1.Format()}");
+            TextEditor editor = new TextEditor();
+            editor.Type("First Line");
+            editor.SetState(new UpperCaseState());
+            editor.Type("Second Line");
+            editor.SetState(new LowerCaseState());
+            editor.Type("Third Line");
+
+            Console.WriteLine("--------------Task 8------------");
+            Console.WriteLine("Example ");
+            ObjectStructure objectStructure = new ObjectStructure();
+            objectStructure.Attach(new ConcreteElementA());
+            objectStructure.Attach(new ConcreteElementB());
+            ConcreteVisitor visitor = new ConcreteVisitor();
+            objectStructure.Accept(visitor);
+            Console.WriteLine("\n");
+
+            
+            Console.WriteLine("--------------Task 9------------");
+            Console.WriteLine("Example");
+            Context context = new Context { Input = "5" };
+
+            TerminalExpression terminalExpression = new TerminalExpression();
+            NonterminalExpression nonterminalExpression = new NonterminalExpression();
+
+            Client client = new Client();
+            client.AddExpression(terminalExpression);
+            client.AddExpression(nonterminalExpression);
+
+            client.Interpret(context);
+
+            Console.WriteLine("Result: " + context.Output);
+            Console.WriteLine("\n");
+
+
+            Console.WriteLine("--------------Task 10------------");
+            Console.WriteLine("Example ");
+            ConcreteAggregate aggregate = new ConcreteAggregate();
+            aggregate.AddItem("Item 1");
+            aggregate.AddItem("Item 2");
+            aggregate.AddItem("Item 3");
+
+            IIterator iterator = aggregate.CreateIterator();
+
+            Console.WriteLine("Iterating over the collection:");
+            for (object item = iterator.First(); !iterator.IsDone(); item = iterator.Next())
+            {
+                Console.WriteLine(item);
+                Console.WriteLine("\n");
+
+
+            Console.WriteLine("--------------Task 11------------");
+            Console.WriteLine("Example");
+            Originator originator = new Originator();
+            Caretaker caretaker = new Caretaker();
+
+            originator.State = "State 1";
+            caretaker.Memento = originator.CreateMemento();
+
+            originator.State = "State 2";
+            Console.WriteLine("Current state: " + originator.State);
+
+            originator.RestoreMemento(caretaker.Memento);
+            Console.WriteLine("Restored state: " + originator.State);
         }
     }
 }
