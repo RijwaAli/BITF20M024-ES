@@ -1,8 +1,9 @@
 pipeline {
     agent any
-         tools { 
-                maven 'Maven 3.9.6' 
-    }        
+    tools { 
+        maven 'Maven 3.9.6' 
+    }
+        
     stages {
         stage('Checkout SCM') {
             steps {
@@ -10,7 +11,8 @@ pipeline {
                 checkout scm
             }
         }
-        stage ('Build') {
+        
+        stage('Build') {
             steps {
                 echo 'This is a minimal pipeline.'
             }
