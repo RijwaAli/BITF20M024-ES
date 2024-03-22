@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+         tools { 
+                maven 'Maven 3.9.6' 
+    }        
     stages {
         stage('Checkout SCM') {
             steps {
@@ -8,11 +10,9 @@ pipeline {
                 checkout scm
             }
         }
-        
-        stage('Build') {
+        stage ('Build') {
             steps {
-                // Build using Maven
-                bat 'E:\\software\\apache-maven-3.9.6\\bin\\mvn clean install'
+                echo 'This is a minimal pipeline.'
             }
         }
     }
