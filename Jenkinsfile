@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 // Run Maven clean install
-                bat "\"%MAVEN_HOME%\\bin\\mvn\" clean install"
+                bat "\"%MAVEN_HOME%\\mvn\" clean install"
             }
         }
     }
