@@ -7,13 +7,14 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
-                // Checkout SCM steps
+                echo 'Checking out SCM...'
                 checkout scm
             }
         }
         
         stage('Build') {
             steps {
+                echo 'Building...'
                 echo 'This is a minimal pipeline.'
             }
         }
