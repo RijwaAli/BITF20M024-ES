@@ -1,21 +1,24 @@
 pipeline {
     agent any
-    tools { 
-        maven 'Maven 3.9.6' 
+    
+    tools {
+        // Define Maven tool named 'Maven 3.9.6'
+        maven 'Maven 3.9.6'
     }
-        
+
     stages {
         stage('Checkout SCM') {
             steps {
-                echo 'Starting Checkout SCM stage...'
+                echo 'Checking out source code from SCM...'
                 checkout scm
             }
         }
         
         stage('Build') {
             steps {
-                echo 'Starting Build stage...'
-                echo 'This is a minimal pipeline.'
+                echo 'Building the project...'
+                // Run Maven clean install
+                bat '"E:\\software\\apache-maven-3.9.6\\bin\\mvn" clean install'
             }
         }
     }
@@ -26,6 +29,7 @@ pipeline {
         }
         
         success {
+            echo 'Build succeeded! Running FindBugs and PMD...'
             // FindBugs plugin
             step([$class: 'FindBugsPublisher', canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', unHealthy: ''])
             // PMD plugin
@@ -33,9 +37,8 @@ pipeline {
         }
     
         failure {
-            // Actions to perform if the pipeline fails
-            echo 'Pipeline execution failed!'
-            // You can add more actions here
+            echo 'Build failed!'
+            // You can add more actions here for failure scenarios
         }
     }
 }
