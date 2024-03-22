@@ -8,12 +8,14 @@ pipeline {
                 checkout scm
             }
         }
-         stage('Build') {
+        
+        stage('Build') {
             steps {
                 // Build using Maven
                 bat 'mvn clean install'
             }
         }
+        
         stage('Test') {
             steps {
                 // Add test steps here
@@ -21,6 +23,7 @@ pipeline {
                 bat 'mvn test'
             }
         }
+        
         stage('Deploy') {
             steps {
                 // Add deployment steps here
@@ -28,7 +31,13 @@ pipeline {
                 bat 'mvn deploy'
             }
         }
-    
+
+        // Trigger downstream job 'test' with a quiet period of 5 seconds
+        stage('Trigger Downstream Job') {
+            steps {
+                build job: 'test', quietPeriod: 5
+            }
+        }
     }
 
     post {
@@ -48,13 +57,5 @@ pipeline {
             echo 'Pipeline execution failed!'
             // You can add more actions here
         }
-        always {
-            // Actions to perform always, regardless of pipeline result
-            echo 'Pipeline execution completed'
-            // You can add cleanup actions here
-        }
     }
 }
-
-// Trigger downstream job 'test' with a quiet period of 5 seconds
-build job: 'test', quietPeriod: 5
