@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MAVEN_HOME = "E:\software\apache-maven-3.9.6\bin"
+    }
+
     stages {
         stage('Checkout SCM') {
             steps {
@@ -12,30 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build using Maven
-                bat 'mvn clean install'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                // Add test steps here
-                // Example: Execute tests
-                bat 'mvn test'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                // Add deployment steps here
-                // Example: Deploy artifacts
-                bat 'mvn deploy'
-            }
-        }
-
-        // Trigger downstream job 'test' with a quiet period of 5 seconds
-        stage('Trigger Downstream Job') {
-            steps {
-                build job: 'test', quietPeriod: 5
+                bat "${MAVEN_HOME}/bin/mvn clean install"
             }
         }
     }
