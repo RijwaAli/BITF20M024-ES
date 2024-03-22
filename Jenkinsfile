@@ -29,29 +29,21 @@ pipeline {
                 bat 'mvn deploy'
             }
         }
-        stage('Cleanup') {
-            steps {
-                // Add cleanup steps here
-                // Example: Clean up temporary files
-                bat 'del /F /S /Q target'
-            }
-        }
-        stage('Notify') {
-            steps {
-                // Add notification steps here
-                // Example: Send notifications
-                echo 'Sending notifications...'
-            }
-        }
+    
     }
 
     post {
-        success {
-            // Actions to perform if the pipeline succeeds
-            echo 'Pipeline execution completed successfully!'
-            // Example: Apply FindBugs and PMD plugins
-            recordIssues tools: [findBugs(pattern: '**/findbugs.xml'), pmdParser(pattern: '**/pmd.xml')]
+        always {
+            echo 'Pipeline execution completed'
         }
+        
+        success {
+            // FindBugs plugin
+            step([$class: 'FindBugsPublisher', canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', unHealthy: ''])
+            // PMD plugin
+            step([$class: 'PmdPublisher', canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', unHealthy: '', useStableBuildAsReference: true])
+        }
+    
         failure {
             // Actions to perform if the pipeline fails
             echo 'Pipeline execution failed!'
