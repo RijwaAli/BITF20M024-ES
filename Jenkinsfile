@@ -8,10 +8,9 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+         stage('Build') {
             steps {
-                // Add build steps here
-                // Example: Maven build
+                // Build using Maven
                 bat 'mvn clean install'
             }
         }
