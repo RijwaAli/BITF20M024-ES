@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = "E:\software\apache-maven-3.9.6\bin"
+        MAVEN_HOME = "C:\\Path\\To\\Your\\Maven\\Installation"
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build using Maven
-                bat "${MAVEN_HOME}/bin/mvn clean install"
+                bat "${env.MAVEN_HOME}\\bin\\mvn clean install"
             }
         }
     }
