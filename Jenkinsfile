@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        // Define Maven tool named 'Maven 3.9.6'
-        maven 'Maven 3.9.6'
+    environment {
+        // Define MAVEN_HOME environment variable
+        MAVEN_HOME = "E:\\software\\apache-maven-3.9.6"
     }
 
     stages {
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 // Run Maven clean install
-                bat '"E:\\software\\apache-maven-3.9.6\\bin\\mvn" clean install'
+                bat "\"%MAVEN_HOME%\\bin\\mvn\" clean install"
             }
         }
     }
@@ -42,4 +42,3 @@ pipeline {
         }
     }
 }
-
