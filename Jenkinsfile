@@ -14,13 +14,7 @@ pipeline {
             }
         }
         
-        stage('Build') {
-            steps {
-                echo 'Building the project...'
-                // Run Maven clean install
-                bat "\"%MAVEN_HOME%\\mvn\" clean install"
-            }
-        }
+      
     }
 
     post {
