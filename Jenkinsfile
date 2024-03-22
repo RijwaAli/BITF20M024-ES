@@ -33,7 +33,7 @@ pipeline {
             steps {
                 // Add cleanup steps here
                 // Example: Clean up temporary files
-                bat 'del /q /s target'
+                bat 'del /F /S /Q target'
             }
         }
         stage('Notify') {
@@ -63,7 +63,7 @@ pipeline {
             // You can add cleanup actions here
         }
     }
-    
-    // Add the build step with a quiet period of 5 seconds for the 'test' job
-    build job: 'test', quietPeriod: 5
 }
+
+// Trigger downstream job 'test' with a quiet period of 5 seconds
+build job: 'test', quietPeriod: 5
