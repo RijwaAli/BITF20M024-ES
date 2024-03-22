@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        MAVEN_HOME = "E:\\software\\apache-maven-3.9.6"
-    }
-
     stages {
         stage('Checkout SCM') {
             steps {
@@ -16,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build using Maven
-                bat "${env.MAVEN_HOME}\\bin\\mvn clean install"
+                bat 'E:\\software\\apache-maven-3.9.6\\bin\\mvn clean install'
             }
         }
     }
